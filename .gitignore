@@ -1,0 +1,23 @@
+venv/
+
+Thumbs.db
+Desktop.ini
+
+__pycache__/
+*.pyc
+*.pyo
+
+*.log
+
+.env  # Jeśli używasz pliku .env na zmienne środowiskowe (np. hasła, klucze API)
+
+.idea/       # PyCharm
+.vscode/     # Visual Studio Code
+*.iml        # IntelliJ IDEA
+
+*.tmp
+*.bak
+
+build/
+dist/
+*.egg-info/
