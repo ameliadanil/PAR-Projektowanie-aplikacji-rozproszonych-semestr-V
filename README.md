@@ -14,7 +14,7 @@ Serwer ocenia odpowiedź jako poprawną lub niepoprawną i aktualizuje wynik uż
 4. Zakończenie quizu:
 Po udzieleniu odpowiedzi na wszystkie pytania serwer wysyła podsumowanie wyniku użytkownika.
 
-Przepływ działania aplikacji:
+Proces działania aplikacji:
 1. Klient przesyła swoją nazwę użytkownika do serwera.
 2. Serwer rozpoczyna quiz, przesyłając pytania jedno po drugim.
 3. Klient wyświetla pytanie, a użytkownik odpowiada poprzez wybór odpowiedzi.
