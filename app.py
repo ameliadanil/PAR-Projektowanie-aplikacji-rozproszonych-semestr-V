@@ -2,10 +2,9 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'  # Klucz do bezpiecznej komunikacji
+app.config['SECRET_KEY'] = 'secret!' 
 socketio = SocketIO(app)
 
-# Przechowywanie wyników i pytań
 scores = {}
 questions = [
     {"question": "Ile wynosi 2 + 2?", "options": ["3", "4", "5"], "answer": "4"},
@@ -13,7 +12,6 @@ questions = [
     {"question": "W którym roku rozpoczęła się II wojna światowa?", "options": ["1938", "1939", "1940"], "answer": "1939"},
 ]
 
-# Funkcja dodawania pytania przez administratora
 @socketio.on('add_question')
 def handle_add_question(data):
     questions.append({
@@ -23,20 +21,18 @@ def handle_add_question(data):
     })
     print(f"Nowe pytanie dodane: {data['question']}")
 
-# Obsługa pobierania pytania
 @socketio.on('get_question')
 def handle_get_question(data):
     username = data.get('username')
     question_index = data.get('index', 0)
     if username not in scores:
-        scores[username] = 0  # Zainicjuj wynik dla nowego użytkownika
+        scores[username] = 0 
     if question_index < len(questions):
         question = questions[question_index]
         emit('question', {'index': question_index, 'question': question['question'], 'options': question['options']})
     else:
         emit('end_quiz', {'message': f"Koniec quizu, {username}! Twój wynik to: {scores[username]} punktów."})
 
-# Obsługa odpowiedzi użytkownika
 @socketio.on('submit_answer')
 def handle_submit_answer(data):
     username = data.get('username')
@@ -45,14 +41,13 @@ def handle_submit_answer(data):
     if question_index < len(questions):
         correct_answer = questions[question_index]['answer']
         if user_answer == correct_answer:
-            scores[username] += 1  # Dodaj punkt
+            scores[username] += 1 
             emit('answer_result', {'result': "correct", 'score': scores[username]})
         else:
             emit('answer_result', {'result': "wrong", 'score': scores[username]})
     else:
         emit('error', {'message': "Nieprawidłowy indeks pytania"})
 
-# HTTP route (opcjonalna)
 @app.route('/')
 def index():
     return "Serwer quizu działa poprawnie!"
