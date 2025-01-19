@@ -9,11 +9,10 @@ __pycache__/
 
 *.log
 
-.env  # Jeśli używasz pliku .env na zmienne środowiskowe (np. hasła, klucze API)
+.env  
 
-.idea/       # PyCharm
-.vscode/     # Visual Studio Code
-*.iml        # IntelliJ IDEA
+.idea/         
+*.iml        
 
 *.tmp
 *.bak
