@@ -1,18 +1,15 @@
 import socketio
 
-# Inicjalizacja klienta Socket.IO
 sio = socketio.Client()
 
-# Globalne zmienne
 username = None
 current_question_index = 0
 
-# Obsługa połączenia z serwerem
 @sio.on('connect')
 def on_connect():
     global username
     print("Połączono z serwerem quizu!")
-    if not username:  # Zapytaj o nazwę użytkownika tylko raz
+    if not username: 
         username = input("Podaj swoją nazwę użytkownika: ")
     sio.emit('get_question', {"username": username, "index": current_question_index})
 
@@ -40,7 +37,7 @@ def on_question(data):
         })
     except (ValueError, IndexError):
         print("Niepoprawna odpowiedź! Spróbuj ponownie.")
-        sio.emit('get_question', {"username": username, "index": current_question_index})  # Wyślij pytanie jeszcze raz
+        sio.emit('get_question', {"username": username, "index": current_question_index}) 
 
 @sio.on('answer_result')
 def on_answer_result(data):
@@ -59,12 +56,11 @@ def on_end_quiz(data):
     print("Koniec quizu!")
     sio.disconnect()
 
-# Główna logika klienta
 if __name__ == '__main__':
     try:
         print("Łączenie z serwerem...")
-        sio.connect('http://127.0.0.1:5000')  # Połącz z serwerem
-        sio.wait()  # Poczekaj na zakończenie połączenia
+        sio.connect('http://127.0.0.1:5000') 
+        sio.wait() 
     except Exception as e:
         print("Nie udało się połączyć z serwerem:", e)
 
